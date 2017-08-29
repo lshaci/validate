@@ -4,6 +4,9 @@ import java.lang.reflect.Field;
 import java.util.List;
 import java.util.Map;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.lshaci.validate.annotation.NotEmpty;
 import com.lshaci.validate.model.ValidateMessage;
 
@@ -14,20 +17,45 @@ import com.lshaci.validate.model.ValidateMessage;
  */
 public class NotEmptyVerification implements Verification {
 
+	private static final Logger logger = LoggerFactory.getLogger(NotEmptyVerification.class);
+
 	@SuppressWarnings("rawtypes")
 	@Override
 	public ValidateMessage validate(Field field, Object value) {
 		NotEmpty notEmpty = field.getAnnotation(NotEmpty.class);
 		if (value == null) {
-			return new ValidateMessage(field.getName(), notEmpty.message());
-		} else if (value instanceof String && "".equals(((String) value).trim())) {
-			return new ValidateMessage(field.getName(), notEmpty.message());
-		} else if (value instanceof List && ((List) value).isEmpty()) {
-			return new ValidateMessage(field.getName(), notEmpty.message());
-		} else if (value instanceof Map && ((Map) value).isEmpty()) {
+			logger.error(ISNULL, field.getName());
 			return new ValidateMessage(field.getName(), notEmpty.message());
 		}
-		return null;
+		if (value instanceof String) {
+			if ("".equals(((String) value).trim())) {
+				logger.error("This field({}) is a String, but empty!", field.getName());
+				return new ValidateMessage(field.getName(), notEmpty.message());
+			} else {
+				logger.debug("This field({}) is a String, validate success!", field.getName());
+				return null;
+			}
+		}
+		if (value instanceof String) {
+			if (((List) value).isEmpty()) {
+				logger.error("This field({}) is a List, but empty!", field.getName());
+				return new ValidateMessage(field.getName(), notEmpty.message());
+			} else {
+				logger.debug("This field({}) is a List, validate success!", field.getName());
+				return null;
+			}
+		}
+		if (value instanceof Map) {
+			if (((Map) value).isEmpty()) {
+				logger.error("This field({}) is a Map, but empty!", field.getName());
+				return new ValidateMessage(field.getName(), notEmpty.message());
+			} else {
+				logger.debug("This field({}) is a Map, validate success!", field.getName());
+				return null;
+			}
+		}
+		logger.error("This field({}) is a {}, NotEmpty authentication is not supported!", field.getName(), value.getClass().getSimpleName());
+		return new ValidateMessage(field.getName(), "该字段不支持NotEmpty验证");
 	}
 
 }

@@ -12,6 +12,15 @@ import com.lshaci.validate.model.ValidateMessage;
 public interface Verification {
 	
 	/**
+	 * 验证成功日志信息
+	 */
+	String SUCCESS = "This field({}) validate successed!";
+	/**
+	 * 值为null日子信息
+	 */
+	String ISNULL = "This field({}) is null!";
+	
+	/**
 	 * 对一个对象的字段进行验证
 	 * 
 	 * @param field		需要验证的字段
