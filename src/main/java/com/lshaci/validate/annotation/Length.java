@@ -29,6 +29,6 @@ public @interface Length {
 	/**
 	 * 验证未通过的提示消息
 	 */
-	String message() default "字段长度超过限制";
+	String message() default "字段长度不符合要求";
 
 }

@@ -19,6 +19,6 @@ public @interface Email {
 	/**
 	 * 验证未通过的提示消息
 	 */
-	String message() default "该字段不是email";
+	String message() default "字段不是email格式";
 
 }

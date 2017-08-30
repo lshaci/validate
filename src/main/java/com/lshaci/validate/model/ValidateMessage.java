@@ -7,24 +7,39 @@ package com.lshaci.validate.model;
  */
 public class ValidateMessage {
 	
-	private String fieldName;	// 验证的字段
+	private String verify;		// 验证器名称
+	private String field;		// 验证的字段
 	private String message;		// 验证对应字段的提示消息
 	
 	public ValidateMessage() {
 		super();
 	}
-	
-	public ValidateMessage(String fieldName, String message) {
+
+	/**
+	 * 构建一个验证信息
+	 * 
+	 * @param verify	验证器名称
+	 * @param field		验证的字段名
+	 * @param message	消息提示
+	 */
+	public ValidateMessage(String verify, String field, String message) {
 		super();
-		this.fieldName = fieldName;
+		this.verify = verify;
+		this.field = field;
 		this.message = message;
 	}
-	
-	public String getFieldName() {
-		return fieldName;
+
+	public String getVerify() {
+		return verify;
 	}
-	public void setFieldName(String fieldName) {
-		this.fieldName = fieldName;
+	public void setVerify(String verify) {
+		this.verify = verify;
+	}
+	public String getField() {
+		return field;
+	}
+	public void setField(String field) {
+		this.field = field;
 	}
 	public String getMessage() {
 		return message;
@@ -35,7 +50,8 @@ public class ValidateMessage {
 
 	@Override
 	public String toString() {
-		return "ValidateMessage [fieldName=" + fieldName + ", message=" + message + "]";
+		return "ValidateMessage [verify=" + verify + ", field=" + field + ", message=" + message + "]";
 	}
+	
 	
 }

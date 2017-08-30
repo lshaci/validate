@@ -12,7 +12,7 @@ import java.util.Objects;
 import java.util.Set;
 
 import com.lshaci.validate.model.ValidateMessage;
-import com.lshaci.validate.verification.Verification;
+import com.lshaci.validate.verify.Verify;
 
 /**
  * 验证工具
@@ -23,21 +23,17 @@ import com.lshaci.validate.verification.Verification;
 public class Validator {
 	
 	/**
-	 * Verification path
-	 */
-	private static final String VERIFICATION_PATH = "verification";
-	/**
 	 * 注解验证器包名
 	 */
-	private static final String PREFIX = Validator.class.getPackage().getName() + "." + VERIFICATION_PATH + ".";
+	private static final String PREFIX = Verify.class.getPackage().getName() + ".";
 	/**
 	 * 验证器后缀
 	 */
-	private static final String SUFFIX = "Verification";
+	private static final String SUFFIX = Verify.class.getSimpleName();
 	/**
 	 * 注解验证器缓存
 	 */
-	private static final Map<String, Verification> verifications = new HashMap<>();
+	private static final Map<String, Verify> verifies = new HashMap<>();
 	/**
 	 * 需要验证的注解
 	 */
@@ -68,10 +64,10 @@ public class Validator {
 						return Arrays.stream(f.getAnnotations())
 							.filter(a -> annotationClassNames.contains(a.annotationType().getName()))
 							.map(a -> {
-								Verification verification = getVerification(a);
-								if (verification != null) {
+								Verify verify = getVerify(a);
+								if (verify != null) {
 									try {
-										return verification.validate(f, f.get(obj));
+										return verify.validate(f, f.get(obj));
 									} catch (IllegalArgumentException | IllegalAccessException e) {
 										e.printStackTrace();
 									}
@@ -92,13 +88,13 @@ public class Validator {
 	 * @param annotation	需要获取验证器的注解
 	 * @return	该注解的验证对象
 	 */
-	private Verification getVerification(Annotation annotation) {
+	private Verify getVerify(Annotation annotation) {
 		String className = PREFIX + annotation.annotationType().getSimpleName() + SUFFIX;
 		try {
-			Verification verification = verifications.get(className);
+			Verify verification = verifies.get(className);
 			if (verification == null) {
-				verification = (Verification) Class.forName(className).newInstance();
-				verifications.put(className, verification);
+				verification = (Verify) Class.forName(className).newInstance();
+				verifies.put(className, verification);
 			}
 			return verification;
 		} catch (Exception e) {

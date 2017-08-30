@@ -1,4 +1,4 @@
-package com.lshaci.validate.verification;
+package com.lshaci.validate.verify;
 
 import java.lang.reflect.Field;
 
@@ -13,9 +13,11 @@ import com.lshaci.validate.model.ValidateMessage;
  * 
  * @author lshaci
  */
-public class EmailVerification implements Verification {
+public class EmailVerify implements Verify {
 	
-	private static final Logger logger = LoggerFactory.getLogger(EmailVerification.class);
+	private static final Logger logger = LoggerFactory.getLogger(EmailVerify.class);
+	
+	private static final String verify = Email.class.getSimpleName();
 	
 	/**
 	 * 邮箱正则表达式
@@ -27,16 +29,16 @@ public class EmailVerification implements Verification {
 		Email email = field.getAnnotation(Email.class);
 		if (value == null) {
 			logger.error(ISNULL, field.getName());
-			return new ValidateMessage(field.getName(), email.message());
+			return new ValidateMessage(verify, field.getName(), email.message());
 		}
 		if (value instanceof String) {
 			if (!((String) value).matches(EMAIL_REGEX)) {
 				logger.error("This field({}) is not an email!", field.getName());
-				return new ValidateMessage(field.getName(), email.message());
+				return new ValidateMessage(verify, field.getName(), email.message());
 			}
 		} else {
 			logger.error("This field({}) is not String!", field.getName());
-			return new ValidateMessage(field.getName(), "该字段不是字符串类型");
+			return new ValidateMessage(verify, field.getName(), "该字段不是字符串类型");
 		}
 		logger.debug(SUCCESS, field.getName());
 		return null;

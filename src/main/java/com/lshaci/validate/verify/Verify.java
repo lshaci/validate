@@ -1,4 +1,4 @@
-package com.lshaci.validate.verification;
+package com.lshaci.validate.verify;
 
 import java.lang.reflect.Field;
 
@@ -9,7 +9,7 @@ import com.lshaci.validate.model.ValidateMessage;
  * 
  * @author lshaci
  */
-public interface Verification {
+public interface Verify {
 	
 	/**
 	 * 验证成功日志信息
