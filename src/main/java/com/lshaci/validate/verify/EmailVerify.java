@@ -29,18 +29,22 @@ public class EmailVerify implements Verify {
 		Email email = field.getAnnotation(Email.class);
 
 		if (value == null) {
-			logger.error(ISNULL, field.getName());
-			return new ValidateMessage(verify, field.getName(), email.message());
-		} else if (email.require()) {
-			if (value instanceof String) {
-				if (!((String) value).matches(EMAIL_REGEX)) {
-					logger.error("This field({}) is not an email!", field.getName());
-					return new ValidateMessage(verify, field.getName(), email.message());
-				}
+			if (email.require()) {
+				logger.error(ISNULL, field.getName());
+				return new ValidateMessage(verify, field.getName(), email.message());
 			} else {
-				logger.error("This field({}) is not String!", field.getName());
-				return new ValidateMessage(verify, field.getName(), "该字段不是字符串类型");
+				logger.warn(NOTNEED, field.getName());
+				return null;
 			}
+		}
+		if (value instanceof String) {
+			if (!((String) value).matches(EMAIL_REGEX)) {
+				logger.error("This field({}) is not an email!", field.getName());
+				return new ValidateMessage(verify, field.getName(), email.message());
+			}
+		} else {
+			logger.error("This field({}) is not String!", field.getName());
+			return new ValidateMessage(verify, field.getName(), "该字段不是字符串类型");
 		}
 		logger.debug(SUCCESS, field.getName());
 		return null;

@@ -16,9 +16,14 @@ public interface Verify {
 	 */
 	String SUCCESS = "This field({}) validate successed!";
 	/**
-	 * 值为null日子信息
+	 * 值为null日志信息
 	 */
 	String ISNULL = "This field({}) is null!";
+	
+	/**
+	 * 值为null但是不需要验证日志信息
+	 */
+	String NOTNEED = "This field({}) is null, but not need validate!";
 	
 	/**
 	 * 对一个对象的字段进行验证

@@ -23,13 +23,17 @@ public class LengthVerify implements Verify {
 	public ValidateMessage validate(Field field, Object value) {
 		Length length = field.getAnnotation(Length.class);
 		if (value == null) {
-			logger.error(ISNULL, field.getName());
-			return new ValidateMessage(verify, field.getName(), length.message());
-		} else if (length.require()) {
-			if (value.toString().length() < length.min() || value.toString().length() > length.max()) {
-				logger.error("The length of this field({}) exceeds the limit!", field.getName());
+			if (length.require()) {
+				logger.error(ISNULL, field.getName());
 				return new ValidateMessage(verify, field.getName(), length.message());
+			} else {
+				logger.warn(NOTNEED, field.getName());
+				return null;
 			}
+		}
+		if (value.toString().length() < length.min() || value.toString().length() > length.max()) {
+			logger.error("The length of this field({}) exceeds the limit!", field.getName());
+			return new ValidateMessage(verify, field.getName(), length.message());
 		}
 		
 		logger.debug(SUCCESS, field.getName());
