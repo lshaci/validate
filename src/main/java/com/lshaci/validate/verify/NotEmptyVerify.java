@@ -38,7 +38,7 @@ public class NotEmptyVerify implements Verify {
 				return null;
 			}
 		}
-		if (value instanceof String) {
+		if (value instanceof List) {
 			if (((List) value).isEmpty()) {
 				logger.error("This field({}) is a List, but empty!", field.getName());
 				return new ValidateMessage(verify, field.getName(), notEmpty.message());
@@ -53,6 +53,15 @@ public class NotEmptyVerify implements Verify {
 				return new ValidateMessage(verify, field.getName(), notEmpty.message());
 			} else {
 				logger.debug("This field({}) is a Map, validate success!", field.getName());
+				return null;
+			}
+		}
+		if (value.getClass().isArray()) {
+			if (((Object[]) value).length == 0) {
+				logger.error("This field({}) is a Array, but empty!", field.getName());
+				return new ValidateMessage(verify, field.getName(), notEmpty.message());
+			} else {
+				logger.debug("This field({}) is a Array, validate success!", field.getName());
 				return null;
 			}
 		}
