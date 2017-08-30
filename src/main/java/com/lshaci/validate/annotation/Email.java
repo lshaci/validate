@@ -17,6 +17,11 @@ import java.lang.annotation.Target;
 public @interface Email {
 	
 	/**
+	 * 是否需要进行验证
+	 */
+	boolean require() default true;
+	
+	/**
 	 * 验证未通过的提示消息
 	 */
 	String message() default "字段不是email格式";

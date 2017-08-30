@@ -15,10 +15,9 @@ import java.lang.annotation.Target;
 @Target(ElementType.FIELD)
 @Documented
 public @interface NotNull {
-
+	
 	/**
 	 * 验证未通过的提示消息
 	 */
 	String message() default "字段不能为空";
-	
 }

@@ -25,12 +25,13 @@ public class LengthVerify implements Verify {
 		if (value == null) {
 			logger.error(ISNULL, field.getName());
 			return new ValidateMessage(verify, field.getName(), length.message());
+		} else if (length.require()) {
+			if (value.toString().length() < length.min() || value.toString().length() > length.max()) {
+				logger.error("The length of this field({}) exceeds the limit!", field.getName());
+				return new ValidateMessage(verify, field.getName(), length.message());
+			}
 		}
 		
-		if (value.toString().length() < length.min() || value.toString().length() > length.max()) {
-			logger.error("The length of this field({}) exceeds the limit!", field.getName());
-			return new ValidateMessage(verify, field.getName(), length.message());
-		}
 		logger.debug(SUCCESS, field.getName());
 		return null;
 	}

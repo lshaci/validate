@@ -17,6 +17,11 @@ import java.lang.annotation.Target;
 public @interface Length {
 	
 	/**
+	 * 是否需要进行验证
+	 */
+	boolean require() default true;
+	
+	/**
 	 * 字符串长度最小值
 	 */
 	int min() default 0;
