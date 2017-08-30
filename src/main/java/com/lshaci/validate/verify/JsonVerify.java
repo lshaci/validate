@@ -2,13 +2,10 @@ package com.lshaci.validate.verify;
 
 import java.lang.reflect.Field;
 
-import javax.script.ScriptEngine;
-import javax.script.ScriptEngineManager;
-import javax.script.ScriptException;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.google.gson.JsonParser;
 import com.lshaci.validate.annotation.Json;
 import com.lshaci.validate.model.ValidateMessage;
 
@@ -21,7 +18,7 @@ public class JsonVerify implements Verify {
 	
 	private static final Logger logger = LoggerFactory.getLogger(JsonVerify.class);
 	
-	private static final ScriptEngine se = new ScriptEngineManager().getEngineByName("js");
+	private static final JsonParser jsonParser = new JsonParser();
 	
 	private static final String verify = Json.class.getSimpleName();
 
@@ -59,9 +56,9 @@ public class JsonVerify implements Verify {
 	 */
 	private static boolean isJson(String jsonStr) {
 		try {
-			se.eval(jsonStr);
+			jsonParser.parse(jsonStr);
 			return true;
-		} catch (ScriptException e) {
+		} catch (Exception e) {
 			return false;
 		}
 	}
