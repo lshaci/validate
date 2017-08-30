@@ -2,10 +2,12 @@ package com.lshaci.validate.verify;
 
 import java.lang.reflect.Field;
 
+import javax.script.ScriptEngine;
+import javax.script.ScriptEngineManager;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.google.gson.JsonParser;
 import com.lshaci.validate.annotation.Json;
 import com.lshaci.validate.model.ValidateMessage;
 
@@ -18,7 +20,7 @@ public class JsonVerify implements Verify {
 	
 	private static final Logger logger = LoggerFactory.getLogger(JsonVerify.class);
 	
-	private static final JsonParser jsonParser = new JsonParser();
+	private static final ScriptEngine se = new ScriptEngineManager().getEngineByName("js");
 	
 	private static final String verify = Json.class.getSimpleName();
 
@@ -54,13 +56,16 @@ public class JsonVerify implements Verify {
 	 * @param jsonStr	需要进行判断的字符串
 	 * @return
 	 */
-	private static boolean isJson(String jsonStr) {
+	private static boolean isJson(String json) {
 		try {
-			jsonParser.parse(jsonStr);
-			return true;
+			if ((json.startsWith("{") && json.endsWith("}")) || (json.startsWith("[") && json.endsWith("]"))) {
+				se.eval ("(" + json+ ")");
+				return true;
+			}
 		} catch (Exception e) {
-			return false;
+			//
 		}
+		return false;
 	}
 
 }
