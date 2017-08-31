@@ -7,6 +7,7 @@ import org.slf4j.LoggerFactory;
 
 import com.lshaci.validate.annotation.Between;
 import com.lshaci.validate.model.ValidateMessage;
+import com.lshaci.validate.utils.ParamUtils;
 
 /**
  * 长度验证
@@ -32,9 +33,13 @@ public class BetweenVerify implements Verify {
 			}
 		}
 		if (value instanceof Integer) {
-			if ((Integer) value < between.min() || (Integer) value  > between.max()) {
-				logger.error("The value of this field({}) exceeds the limit!", field.getName());
-				return new ValidateMessage(verify, field.getName(), between.message());
+			Integer min = ParamUtils.getInt(between.min());
+			Integer max = ParamUtils.getInt(between.max());
+			min = min != null ? min : Integer.parseInt(Between.MIN_DEFAULT);
+			max = max != null ? max : Integer.parseInt(Between.MAX_DEFAULT);
+			if ((Integer) value < min.intValue() || (Integer) value  > max.intValue()) {
+				logger.error("The value of this field({}) exceeds the limit [{}-{}]!", field.getName(), min, max);
+				return new ValidateMessage(verify, field.getName(), between.message() + "[" + min + "-" + max + "]");
 			}
 		} else {
 			logger.error("This field({}) is not Integer!", field.getName());

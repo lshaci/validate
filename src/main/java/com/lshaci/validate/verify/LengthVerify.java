@@ -32,7 +32,7 @@ public class LengthVerify implements Verify {
 			}
 		}
 		if (value.toString().length() < length.min() || value.toString().length() > length.max()) {
-			logger.error("The length of this field({}) exceeds the limit!", field.getName());
+			logger.error("The length of this field({}) exceeds the limit [{}-{}]!", field.getName(), length.min(), length.max());
 			return new ValidateMessage(verify, field.getName(), length.message());
 		}
 		

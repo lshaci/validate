@@ -22,7 +22,7 @@ public class EmailVerify implements Verify {
 	/**
 	 * 邮箱正则表达式
 	 */
-	private static final String EMAIL_REGEX = "^[a-z_\\\\d]+(\\\\.[a-z_\\\\d]+)*@([\\\\da-z](-[\\\\da-z])?)+(\\\\.{1,2}[a-z]+)+$";
+	private static final String EMAIL_REGEX = "^[a-z_\\d]+(\\.[a-z_\\d]+)*@([\\da-z](-[\\da-z])?)+(\\.{1,2}[a-z]+)+$";
 
 	@Override
 	public ValidateMessage validate(Field field, Object value) {

@@ -7,7 +7,7 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * validate Integer min and max value
+ * validate int value min and max
  * 
  * @author lshaci
  */
@@ -15,6 +15,9 @@ import java.lang.annotation.Target;
 @Target(ElementType.FIELD)
 @Documented
 public @interface Between {
+	
+	public static final String MIN_DEFAULT = "3";
+	public static final String MAX_DEFAULT = "10";
 	
 	/**
 	 * 是否需要进行验证
@@ -24,12 +27,12 @@ public @interface Between {
 	/**
 	 * 数字最小值
 	 */
-	int min();
+	String min() default MIN_DEFAULT;
 	
 	/**
 	 * 数字最大值
 	 */
-	int max();
+	String max() default MAX_DEFAULT;
 	
 	/**
 	 * 验证未通过的提示消息
