@@ -12,7 +12,7 @@ import com.lshaci.validate.annotation.Json;
 import com.lshaci.validate.model.ValidateMessage;
 
 /**
- * 长度验证
+ * JSON验证
  * 
  * @author lshaci
  */
