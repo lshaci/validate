@@ -16,7 +16,13 @@ import java.lang.annotation.Target;
 @Documented
 public @interface Between {
 	
+	/**
+	 * 默认最小值3
+	 */
 	public static final String MIN_DEFAULT = "3";
+	/**
+	 * 默认最小值10
+	 */
 	public static final String MAX_DEFAULT = "10";
 	
 	/**

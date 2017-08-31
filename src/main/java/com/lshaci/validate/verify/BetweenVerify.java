@@ -10,7 +10,7 @@ import com.lshaci.validate.model.ValidateMessage;
 import com.lshaci.validate.utils.ParamUtils;
 
 /**
- * 长度验证
+ * int数值范围验证
  * 
  * @author lshaci
  */
@@ -37,7 +37,7 @@ public class BetweenVerify implements Verify {
 			Integer max = ParamUtils.getInt(between.max());
 			min = min != null ? min : Integer.parseInt(Between.MIN_DEFAULT);
 			max = max != null ? max : Integer.parseInt(Between.MAX_DEFAULT);
-			if ((Integer) value < min.intValue() || (Integer) value  > max.intValue()) {
+			if ((int) value < min || (int) value  > max) {
 				logger.error("The value of this field({}) exceeds the limit [{}-{}]!", field.getName(), min, max);
 				return new ValidateMessage(verify, field.getName(), between.message() + "[" + min + "-" + max + "]");
 			}
