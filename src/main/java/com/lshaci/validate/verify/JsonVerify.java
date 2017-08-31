@@ -54,7 +54,7 @@ public class JsonVerify implements Verify {
 	 * 判断一个字符是否是json格式
 	 * 
 	 * @param jsonStr	需要进行判断的字符串
-	 * @return
+	 * @return is json format
 	 */
 	private static boolean isJson(String json) {
 		try {

@@ -1,5 +1,6 @@
 package com.lshaci.validate.utils;
 
+import java.util.HashSet;
 import java.util.Set;
 
 import com.lshaci.validate.Validator;
@@ -33,7 +34,11 @@ public class ValidateUtils {
 	 * @return	返回验证详细信息
 	 */
 	public static <T> Set<ValidateMessage> detailValidate(T obj) {
-		return validator.validate(obj);
+		Set<ValidateMessage> result = validator.validate(obj);
+		if (result != null) {
+			return result;
+		}
+		return new HashSet<>();
 	}
 
 }

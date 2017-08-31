@@ -21,7 +21,7 @@ public class ValidatorFactory {
 	/**
 	 * Build a Validator, The validate annotation in ./annotation 
 	 * 
-	 * @return
+	 * @return The default Validator
 	 */
 	public static Validator buildDefaultValidator() {
 		String packageName = ValidatorFactory.class.getPackage().getName() + "." + ANNOTATION_PATH + ".";

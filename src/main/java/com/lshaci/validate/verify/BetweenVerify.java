@@ -56,7 +56,7 @@ public class BetweenVerify implements Verify {
 	 * 获取Between注解的最小值
 	 * 
 	 * @param between	between.min()
-	 * @return
+	 * @return		注解between min对应的int值
 	 */
 	private static int getMin(Between between) {
 		return getValue(between.min(), Between.MIN_DEFAULT);
@@ -65,7 +65,7 @@ public class BetweenVerify implements Verify {
 	 * 获取Between注解的最大值
 	 * 
 	 * @param between	between.max()
-	 * @return
+	 * @return		注解between max对应的int值
 	 */
 	private static int getMax(Between between) {
 		return getValue(between.max(), Between.MAX_DEFAULT);
@@ -75,8 +75,8 @@ public class BetweenVerify implements Verify {
 	 * 获取Between注解的值
 	 * 
 	 * @param key
-	 * @param defaultValue
-	 * @return
+	 * @param defaultValue	默认int值
+	 * @return		key对应的int值
 	 */
 	private static int getValue(String key, String defaultValue) {
 		Integer value = cache.get(key);
