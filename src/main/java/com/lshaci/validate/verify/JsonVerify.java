@@ -58,7 +58,7 @@ public class JsonVerify implements Verify {
 	 */
 	private static boolean isJson(String json) {
 		try {
-			if ((json.startsWith("{") && json.endsWith("}")) || (json.startsWith("[") && json.endsWith("]"))) {
+			if ((json.startsWith("{") && json.endsWith("}")) || (json.startsWith("[{") && json.endsWith("}]"))) {
 				se.eval ("(" + json+ ")");
 				return true;
 			}
