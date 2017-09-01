@@ -1,6 +1,5 @@
 package com.lshaci.validate.utils;
 
-import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
 
@@ -24,11 +23,11 @@ public abstract class ParamUtils {
 	private static Properties properties = new Properties();
 
 	static {
-		InputStream is = ParamUtils.class.getClassLoader().getResourceAsStream(FILE_NAME);
 		try {
+			InputStream is = Thread.currentThread().getContextClassLoader().getResourceAsStream(FILE_NAME);
 			properties.load(is);
-		} catch (IOException e) {
-			logger.warn("This file({}) not found!", FILE_NAME, e);
+		} catch (Exception e) {
+			logger.warn("This file({}) in classpath not found!", FILE_NAME, e);
 		}
 	}
 
