@@ -13,7 +13,7 @@ import com.lshaci.validate.model.ValidateMessage;
  * 
  * @author lshaci
  */
-public class ValidateUtils {
+public abstract class ValidateUtils {
 	
 	private static final Validator validator = ValidatorFactory.buildDefaultValidator();
 	

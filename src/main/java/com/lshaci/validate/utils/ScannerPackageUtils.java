@@ -96,12 +96,9 @@ public abstract class ScannerPackageUtils {
 	/**
 	 * 从jar包中获取所有类的全限定名集合
 	 * 
-	 * @param jarEntries
-	 *            jar包实体
-	 * @param packageName
-	 *            包名
-	 * @param isRecursion
-	 *            是否遍历子包
+	 * @param jarEntries 	jar包实体
+	 * @param packageName 	包名
+	 * @param isRecursion 	是否遍历子包
 	 * @return
 	 */
 	private static Set<String> getClassNameFromJar(Enumeration<JarEntry> jarEntries, String packageName,
@@ -131,12 +128,9 @@ public abstract class ScannerPackageUtils {
 	/**
 	 * 从所有jar中搜索该包，并获取该包下所有类
 	 * 
-	 * @param urls
-	 *            URL集合
-	 * @param packageName
-	 *            包路径
-	 * @param isRecursion
-	 *            是否遍历子包
+	 * @param urls 			URL集合
+	 * @param packageName 	包路径
+	 * @param isRecursion 	是否遍历子包
 	 * @return 类的完整名称
 	 */
 	private static Set<String> getClassNameFromJars(URL[] urls, String packageName, boolean isRecursion) {
