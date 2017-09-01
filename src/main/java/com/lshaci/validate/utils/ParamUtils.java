@@ -7,8 +7,6 @@ import java.util.Properties;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.lshaci.validate.verify.impl.BetweenVerify;
-
 /**
  * 验证注解参数配置工具
  * 
@@ -16,7 +14,7 @@ import com.lshaci.validate.verify.impl.BetweenVerify;
  */
 public abstract class ParamUtils {
 
-	private static final Logger logger = LoggerFactory.getLogger(BetweenVerify.class);
+	private static final Logger logger = LoggerFactory.getLogger(ParamUtils.class);
 
 	/**
 	 * 验证参数配置文件名
