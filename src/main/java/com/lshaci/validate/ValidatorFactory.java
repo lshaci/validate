@@ -95,6 +95,6 @@ public class ValidatorFactory {
 			throw new RuntimeException("No validate verify!!!");
 		}
 		return classNames.stream()
-				.collect(toMap(a -> ((String) a).substring(((String) a).lastIndexOf(".") + 1), a -> a , (k1, k2) -> k2));
+				.collect(toMap(a -> a.replace(verifyPackageName + ".", ""), a -> a , (k1, k2) -> k2));
 	}
 }
