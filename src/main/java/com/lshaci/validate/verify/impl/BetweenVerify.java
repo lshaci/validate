@@ -1,4 +1,4 @@
-package com.lshaci.validate.verify;
+package com.lshaci.validate.verify.impl;
 
 import java.lang.reflect.Field;
 import java.util.HashMap;
@@ -10,6 +10,7 @@ import org.slf4j.LoggerFactory;
 import com.lshaci.validate.annotation.Between;
 import com.lshaci.validate.model.ValidateMessage;
 import com.lshaci.validate.utils.ParamUtils;
+import com.lshaci.validate.verify.Verify;
 
 /**
  * int数值范围验证

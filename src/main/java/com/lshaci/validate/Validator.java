@@ -3,10 +3,8 @@ package com.lshaci.validate;
 import static java.util.stream.Collectors.toSet;
 
 import java.lang.annotation.Annotation;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
@@ -15,46 +13,51 @@ import com.lshaci.validate.model.ValidateMessage;
 import com.lshaci.validate.verify.Verify;
 
 /**
- * 验证工具
+ * Validator Tool
  * 
- * @author root
- *
+ * @author lshaci
  */
 public class Validator {
 	
 	/**
-	 * 注解验证器包名
-	 */
-	private static final String PREFIX = Verify.class.getPackage().getName() + ".";
-	/**
-	 * 验证器后缀
+	 * Verify suffix
 	 */
 	private static final String SUFFIX = Verify.class.getSimpleName();
 	/**
-	 * 注解验证器缓存
+	 * Verifies cache
 	 */
 	private static final Map<String, Verify> verifies = new HashMap<>();
 	/**
-	 * 需要验证的注解
+	 * The Set with validate annotation  class names
 	 */
-	private List<String> annotationClassNames = new ArrayList<>();
+	private Set<String> annotationClassNames;
+	
+	/**
+	 * The Map with validate verify(key: simple class name, value: classname)
+	 */
+	private Map<String, String> verifyClassNames;
 	
 	/**
 	 * Create a Validator with annotation class names
 	 * 
-	 * @param annotationClassNames
+	 * @param annotationClassNames	The Set with validate annotation  class names
+	 * @param verifyClassNames		The Map with validate verify(key: simple class name, value: classname)
 	 */
-	protected Validator(List<String> annotationClassNames) {
+	protected Validator(Set<String> annotationClassNames, Map<String, String> verifyClassNames) {
+		Objects.requireNonNull(verifyClassNames);
+		Objects.requireNonNull(annotationClassNames);
+		
 		this.annotationClassNames = annotationClassNames;
+		this.verifyClassNames = verifyClassNames;
 	}
 	
 	/**
-	 * 对指定对象进行验证
+	 * Validate object
 	 * 
-	 * @param obj	需要验证的对象
-	 * @return	验证的结果信息
+	 * @param obj	The need validate object
+	 * @return	The validate detail result
 	 */
-	public <T> Set<ValidateMessage> validate(T obj) {
+	public Set<ValidateMessage> validate(Object obj) {
 		Objects.requireNonNull(obj, "需要验证的对象不能为空");
 		
 		try {
@@ -83,13 +86,14 @@ public class Validator {
 	}
 	
 	/**
-	 * 根据注解, 获取该注解的验证对象
+	 * Get the Verify Object with validate annotation
 	 * 
-	 * @param annotation	需要获取验证器的注解
-	 * @return	该注解的验证对象
+	 * @param annotation	The validate annotation
+	 * @return	The Verify instance
 	 */
 	private Verify getVerify(Annotation annotation) {
-		String className = PREFIX + annotation.annotationType().getSimpleName() + SUFFIX;
+		String key = annotation.annotationType().getSimpleName() + SUFFIX;
+		String className = verifyClassNames.get(key);
 		try {
 			Verify verification = verifies.get(className);
 			if (verification == null) {

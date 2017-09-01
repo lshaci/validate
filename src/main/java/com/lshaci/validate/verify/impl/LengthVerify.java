@@ -1,4 +1,4 @@
-package com.lshaci.validate.verify;
+package com.lshaci.validate.verify.impl;
 
 import java.lang.reflect.Field;
 
@@ -7,6 +7,7 @@ import org.slf4j.LoggerFactory;
 
 import com.lshaci.validate.annotation.Length;
 import com.lshaci.validate.model.ValidateMessage;
+import com.lshaci.validate.verify.Verify;
 
 /**
  * 长度验证

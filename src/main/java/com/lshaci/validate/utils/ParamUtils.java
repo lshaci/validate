@@ -7,7 +7,7 @@ import java.util.Properties;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.lshaci.validate.verify.BetweenVerify;
+import com.lshaci.validate.verify.impl.BetweenVerify;
 
 /**
  * 验证注解参数配置工具

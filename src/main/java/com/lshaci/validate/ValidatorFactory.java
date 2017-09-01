@@ -1,16 +1,14 @@
 package com.lshaci.validate;
 
-import static java.util.stream.Collectors.toList;
+import static java.util.stream.Collectors.toMap;
 
-import java.io.File;
-import java.io.IOException;
-import java.net.URL;
-import java.util.ArrayList;
-import java.util.Enumeration;
-import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import com.lshaci.validate.utils.ScannerPackageUtils;
 
 /**
  * Validator Factory
@@ -22,38 +20,81 @@ public class ValidatorFactory {
 	private static final Logger logger = LoggerFactory.getLogger(ValidatorFactory.class);
 	
 	/**
-	 * validate annotation path
+	 * The default validate annotation package name
 	 */
-	private static final String ANNOTATION_PATH = "annotation";
+	private static final String ANNOTATION_PACKAGE_NAME = "com.lshaci.validate.annotation";
 	
 	/**
-	 * Build a Validator, The validate annotation in ./annotation 
+	 * The default validate verify package name
+	 */
+	private static final String VERIFY_PACKAGE_NAME = "com.lshaci.validate.verify.impl";
+	
+	/**
+	 * The default validate annotation class names
+	 */
+	private static final Set<String> DEFAULT_ANNOTATION_CLASS_NAMES = getAnnotationClassNames(ANNOTATION_PACKAGE_NAME);
+	
+	/**
+	 * The default validate verify class names
+	 */
+	private static final Map<String, String> DEFAULT_VERIFY_CLASS_NAMES = getVerifyClassNames(VERIFY_PACKAGE_NAME);
+	
+	
+	/**
+	 * Build a default Validator<br>
+	 * 	The validate annotation in "com.lshaci.validate.annotation"<br>
+	 *  The validate verify in "com.lshaci.validate.verify.impl"
 	 * 
 	 * @return The default Validator
-	 * @throws IOException 
 	 */
 	public static Validator buildDefaultValidator() {
-		String packageName = ValidatorFactory.class.getPackage().getName() + "." + ANNOTATION_PATH + ".";
-		String path = packageName.replace(".", "/");
-		List<File> files = new ArrayList<>();
-		Enumeration<URL> resources;
-		try {
-			resources = Thread.currentThread().getContextClassLoader().getResources(path);
-		} catch (IOException e) {
-			logger.warn("Ignore this exception!");
-			throw new RuntimeException();
-		}
-		while (resources.hasMoreElements()) {
-			URL url = (URL) resources.nextElement();
-			files.add(new File(url.getPath()));
-		}
-		List<String> annotationClassNames = files.stream()
-				.filter(File::isDirectory)
-				.map(File::getName)
-				.filter(e -> e.endsWith(".class"))
-				.map(e -> packageName + e.substring(0, e.indexOf(".")))
-				.collect(toList());
-		return new Validator(annotationClassNames);
+		return new Validator(DEFAULT_ANNOTATION_CLASS_NAMES, DEFAULT_VERIFY_CLASS_NAMES);
+	}
+	
+	/**
+	 * Build a Validator
+	 * 
+	 * @param annotationPackageName		The validate annotation package name
+	 * @param verifyPackageName			The validate verify package name
+	 * @return 	Validator instance
+	 */
+	public static Validator buildValidator(String annotationPackageName, String verifyPackageName) {
+		Set<String> annotationClassNames = getAnnotationClassNames(annotationPackageName);
+		annotationClassNames.addAll(DEFAULT_ANNOTATION_CLASS_NAMES);
+		Map<String, String> verifyClassNames = getVerifyClassNames(verifyPackageName);
+		verifyClassNames.putAll(DEFAULT_VERIFY_CLASS_NAMES);
 		
+		return new Validator(annotationClassNames, verifyClassNames);
+	}
+	
+	/**
+	 * Get validate annotation class names
+	 * 
+	 * @param annotationPackageName		annotation package name
+	 * @return	The Set with validate annotation  class names
+	 */
+	private static Set<String> getAnnotationClassNames(String annotationPackageName) {
+		Set<String> classNames = ScannerPackageUtils.getClassNames(annotationPackageName, false);
+		if (classNames == null || classNames.isEmpty()) {
+			logger.error("No validate annotation!!!");
+			throw new RuntimeException("No validate annotation!!!");
+		}
+		return classNames;
+	}
+	
+	/**
+	 * Get validate verify class names
+	 * 
+	 * @param annotationPackageName		annotation package name
+	 * @return	The Map with validate verify(key: simple class name, value: classname)
+	 */
+	private static Map<String, String> getVerifyClassNames(String verifyPackageName) {
+		Set<String> classNames = ScannerPackageUtils.getClassNames(verifyPackageName, false);
+		if (classNames == null || classNames.isEmpty()) {
+			logger.error("No validate verify!!!");
+			throw new RuntimeException("No validate verify!!!");
+		}
+		return classNames.stream()
+				.collect(toMap(a -> ((String) a).substring(((String) a).lastIndexOf(".") + 1), a -> a , (k1, k2) -> k2));
 	}
 }
