@@ -4,7 +4,7 @@
 
 	<groupId>io.github.lshaci</groupId>
 	<artifactId>validate</artifactId>
-	<version>0.0.3</version>
+	<version>0.0.4</version>
 
 	<name>Validate Framework</name>
 	<description>A Simple Validate Framework</description>
