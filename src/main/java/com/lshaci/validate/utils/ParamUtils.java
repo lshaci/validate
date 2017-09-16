@@ -27,7 +27,7 @@ public abstract class ParamUtils {
 			InputStream is = Thread.currentThread().getContextClassLoader().getResourceAsStream(FILE_NAME);
 			properties.load(is);
 		} catch (Exception e) {
-			logger.warn("This file({}) in classpath not found!", FILE_NAME, e);
+			logger.warn("This file({}) in classpath not found!", FILE_NAME);
 		}
 	}
 
