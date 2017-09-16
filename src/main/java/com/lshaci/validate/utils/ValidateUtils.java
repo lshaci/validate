@@ -23,7 +23,7 @@ public abstract class ValidateUtils {
 	 * @param obj	需要验证的对象
 	 * @return	是否通过验证
 	 */
-	public static <T> boolean validate(T obj) {
+	public static boolean validate(Object obj) {
 		return detailValidate(obj).isEmpty();
 	}
 	
@@ -33,7 +33,7 @@ public abstract class ValidateUtils {
 	 * @param obj		需要验证的对象
 	 * @return	返回验证详细信息
 	 */
-	public static <T> Set<ValidateMessage> detailValidate(T obj) {
+	public static Set<ValidateMessage> detailValidate(Object obj) {
 		Set<ValidateMessage> result = validator.validate(obj);
 		if (result != null) {
 			return result;
